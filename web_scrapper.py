@@ -11,7 +11,7 @@ def top_movie(url,top_num):
         movie_id_list.append((str(class_content).split("/"))[2])
     return movie_id_list
 
-#print(top_5_movie("https://www.imdb.com/chart/top/"))
+
 
 def get_synopsis(movies_id):
     base_url = "https://www.imdb.com/title/"
@@ -23,7 +23,7 @@ def get_synopsis(movies_id):
         synopsis_list.append(synopsis.getText())
     return synopsis_list
 
-movie = top_movie("https://www.imdb.com/chart/top/",1)
+movie_id_list = top_movie("https://www.imdb.com/chart/top/",1)
 synopsis_list = get_synopsis(movie)
 
 
@@ -37,6 +37,15 @@ def bag_of_words(synopsis_list):
         bag_of_words.append([word for word in text_tokens if not word in all_stopwords])
     return bag_of_words
 
+
+def movie_dict(movie_id_list,synopsis_list):
+    movies_dict = {}
+    for movie_id in movie_id_list:
+        for value in synopsis_list:
+            movie_dict[f'{movie_id}'] = value
+    print(movies_dict)
+
+movie_dict(movie_id_list,synopsis_list)
 
 
 
