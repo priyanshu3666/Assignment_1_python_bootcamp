@@ -27,4 +27,15 @@ movie_id_list = top_movie("https://www.imdb.com/chart/top/",1)
 synopsis_list = get_synopsis(movie_id_list)
 
 
+def bag_of_words(synopsis_list):
+    bag_of_words =[]
+    all_stopwords = stopwords.words('english')
+    all_stopwords.append(['of','he','a','the','is','the',])
+    for content in synopsis_list:        
+        text_tokens = new_words= [word for word in word_tokenize(content,language='english') if word. isalnum()] 
+        bag_of_words.append([word for word in text_tokens if not word in all_stopwords])
+    return bag_of_words
+
+
+
 
