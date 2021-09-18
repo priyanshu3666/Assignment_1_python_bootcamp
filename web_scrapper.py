@@ -36,6 +36,14 @@ def bag_of_words(synopsis_list):
         bag_of_words.append([word for word in text_tokens if not word in all_stopwords])
     return bag_of_words
 
+def movie_dict(movie_id_list,synopsis_list):
+    movies_dict = {}
+    for movie_id in movie_id_list:
+        for value in synopsis_list:
+            movies_dict[f'{movie_id}'] = value
+    print(movies_dict)
+
+movie_dict(movie_id_list,synopsis_list)
 
 
 
