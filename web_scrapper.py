@@ -1,5 +1,5 @@
 from nltk.tokenize import word_tokenize
-import re
+from nltk.corpus import stopwords
 import requests,bs4
 
 def top_movie(url,top_num):
@@ -30,11 +30,13 @@ synopsis_list = get_synopsis(movie)
 
 def bag_of_words(synopsis_list):
     bag_of_words =[]
-    for content in synopsis_list:
-        tokenize_list = word_tokenize(content,language='english')
-        bag_of_words.append(tokenize_list)
-    print(bag_of_words)
+    all_stopwords = stopwords.words('english')
+    all_stopwords.append(['of','he','a','the','is','the',])
+    for content in synopsis_list:        
+        text_tokens = new_words= [word for word in word_tokenize(content,language='english') if word. isalnum()] 
+        bag_of_words.append([word for word in text_tokens if not word in all_stopwords])
+    return bag_of_words
 
-bag_of_words(synopsis_list)
+
 
 
