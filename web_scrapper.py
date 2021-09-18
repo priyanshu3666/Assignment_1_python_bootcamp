@@ -1,7 +1,7 @@
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import requests,bs4
-
+import re
 def top_movie(url,top_num):
     request_ = requests.get(url)
     soup =bs4.BeautifulSoup(request_.text,'lxml')
@@ -24,7 +24,7 @@ def get_synopsis(movies_id):
     return synopsis_list
 
 movie_id_list = top_movie("https://www.imdb.com/chart/top/",1)
-synopsis_list = get_synopsis(movie)
+synopsis_list = get_synopsis(movie_id_list)
 
 
 
@@ -42,10 +42,19 @@ def movie_dict(movie_id_list,synopsis_list):
     movies_dict = {}
     for movie_id in movie_id_list:
         for value in synopsis_list:
-            movie_dict[f'{movie_id}'] = value
+            movies_dict[f'{movie_id}'] = value
     print(movies_dict)
 
 movie_dict(movie_id_list,synopsis_list)
 
 
+Omdb_key = "64a6542a"
 
+def fetchting_movie_data(movie_id):
+    pattern = r"\D{2}\d{7}"
+    if re.compile(pattern).match(movie_id).group()==movie_id:
+        fetched_data = requests.get(f"http://www.omdbapi.com/?i={movie_id}&apikey={Omdb_key}")
+        synopsis_data = fetched_data.json()
+        return synopsis_data
+for movie_id  in movie_id_list:
+    fetchting_movie_data(str(movie_id))
