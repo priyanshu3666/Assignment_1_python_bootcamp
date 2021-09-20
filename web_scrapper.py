@@ -1,9 +1,13 @@
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-import requests,bs4
+import requests
+import bs4
 import re
+from string import punctuation
+import csv
+import os
 
-from requests.models import default_hooks
+
 
 #top_movie function  return the list of top n movies from IMDB website
 def top_movie(url,top_num):
@@ -41,27 +45,26 @@ movie_id_list = top_movie("https://www.imdb.com/chart/top/",1)
 synopsis_list = get_synopsis(movie_id_list)
 
 #this function return a list od bag_of_words
-def bag_of_words(synopsis_list):
-    bag_of_words =[]
+def bag_of_words(string_):
+    
     all_stopwords = stopwords.words('english')
-    all_stopwords.append(['of','he','a','the','is','the',])
-    for content in synopsis_list:        
-        text_tokens = new_words= [word for word in word_tokenize(content,language='english') if word. isalnum()] 
-        bag_of_words.append([word for word in text_tokens if not word in all_stopwords])
-    return bag_of_words
+    
+    for content in synopsis_list:       
+        text_tokens= [word for word in word_tokenize(content) if word.isalnum()] 
+        bag_of_words = [word for word in text_tokens if not word in all_stopwords]
+        filtered_string = [' '.join(bag_of_words)]
+        
+    return filtered_string
 
-# this create a dictionary of movie_id and synopsis
-def movie_dict(movie_id_list,synopsis_list):
-    try:
-        movies_dict = {}
-        for movie_id in movie_id_list:
-            for value in synopsis_list:
-                movies_dict[f'{movie_id}'] = value
-        print(movies_dict)
-    except TypeError:
-        print("none type returned")
 
-movie_dict(movie_id_list,synopsis_list)
+movie_data_dict = {}
+num = 0
+for string in synopsis_list:
+    my_punctuation = punctuation.replace("'", "")
+    new_str = string.translate(str.maketrans("", "", my_punctuation))
+    movie_data_dict[movie_id_list[num]] =  bag_of_words(new_str)
+    num+=1
+
 
 
 Omdb_key = "64a6542a"
@@ -72,6 +75,12 @@ def fetchting_movie_data(movie_id):
     if re.compile(pattern).match(movie_id).group()==movie_id:
         fetched_data = requests.get(f"http://www.omdbapi.com/?i={movie_id}&apikey={Omdb_key}")
         synopsis_data = fetched_data.json()
-        print(synopsis_data)
+        return synopsis_data
 for movie_id  in movie_id_list:
-    fetchting_movie_data(str(movie_id))
+    response = fetchting_movie_data(str(movie_id))
+    temp_dict = {}
+    temp_dict['Synopsis'] = movie_data_dict[f'{movie_id}']
+    temp_dict['Genre'] = response['Genre']
+    temp_dict['Actors'] = response['Actors']
+    movie_data_dict[f'{movie_id}'] =temp_dict
+print(movie_data_dict)
