@@ -46,42 +46,49 @@ synopsis_list = get_synopsis(movie_id_list)
 
 #this function return a list od bag_of_words
 def bag_of_words(string_):
-    
-    all_stopwords = stopwords.words('english')
-       
-    text_tokens= [word for word in word_tokenize(string_) if word.isalnum()] 
-    bag_of_words = [word for word in text_tokens if not word in all_stopwords]
-    filtered_string = [' '.join(bag_of_words)]
-        
-    return filtered_string
+    try:
+        all_stopwords = stopwords.words('english')
+        text_tokens= [word for word in word_tokenize(string_) if word.isalnum()] 
+        bag_of_words = [word for word in text_tokens if not word in all_stopwords]
+        filtered_string = [' '.join(bag_of_words)]
+            
+        return filtered_string
+    except TypeError:
+        print("passed empty  argument")
 
 #diction creation  with title as key and synopsis as value
 movie_data_dict = {}
 num = 0
 for string_ in synopsis_list:
-    my_punctuation = punctuation.replace("'", "")
-    new_str = string_.translate(str.maketrans("", "", my_punctuation))
+    new_str = string_.translate(str.maketrans("", "", punctuation))
     movie_data_dict[movie_id_list[num]] =  bag_of_words(new_str)
     num+=1
 
 
 
-Omdb_key = "64a6542a"
+Omdb_key = "64a6542a" # apikey for OBDb website
 
 # creating a api that return movie data
 def fetchting_movie_data(movie_id):
     pattern = r"\D{2}\d{7}"
-    if re.compile(pattern).match(movie_id).group()==movie_id:
-        fetched_data = requests.get(f"http://www.omdbapi.com/?i={movie_id}&apikey={Omdb_key}")
-        synopsis_data = fetched_data.json()
-        return synopsis_data
+    try:
+        if re.compile(pattern).match(movie_id).group()==movie_id:
+            fetched_data = requests.get(f"http://www.omdbapi.com/?i={movie_id}&apikey={Omdb_key}")
+            synopsis_data = fetched_data.json()
+            return synopsis_data
+    except TypeError:
+        print("movie_id is not int ")
 for movie_id  in movie_id_list:
     response = fetchting_movie_data(str(movie_id))
-    temp_dict = {}
-    temp_dict['Synopsis'] = movie_data_dict[f'{movie_id}']
-    temp_dict['Genre'] = response['Genre']
-    temp_dict['Actors'] = response['Actors']
-    movie_data_dict[f'{movie_id}'] =temp_dict
+    try :
+        temp_dict = {}
+        temp_dict['Synopsis'] = movie_data_dict[f'{movie_id}']
+        temp_dict['Genre'] = response['Genre']
+        temp_dict['Actors'] = response['Actors']
+        movie_data_dict[f'{movie_id}'] =temp_dict
+    except KeyError:
+        print("key not found")
+        
 print(movie_data_dict)
 
 
@@ -93,8 +100,11 @@ def dict_to_csv_writer():
         file_reader = csv.DictReader(file_)
         for row in file_reader:
             for item in movie_id_list:
-                if row['title'] == item:
-                    movie_data_dict.pop(item)
+                try:
+                    if row['title'] == item:
+                        movie_data_dict.pop(item)
+                except KeyError:
+                    print("key not found")
         file_.close()
         if len(movie_data_dict) > 0:
             with open(file_name,'a') as file:
@@ -121,3 +131,5 @@ def search_movies_data():
             return filtered_data
 
 print(search_movies_data())
+
+    
