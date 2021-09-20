@@ -55,7 +55,7 @@ def bag_of_words(string_):
         
     return filtered_string
 
-
+#diction creation  with title as key and synopsis as value
 movie_data_dict = {}
 num = 0
 for string_ in synopsis_list:
@@ -109,3 +109,15 @@ def dict_to_csv_writer():
                 csv_writer_.writerow({field: movie_data_dict[key].get(field) or key for field in fields})
 
 dict_to_csv_writer()
+
+
+def search_movies_data():
+    
+    user_input = input("Enter Genre or Actors ,keep in mind it is case sensitve!! ")
+    if user_input and not user_input.isdigit():
+        with open(file_name, 'r') as file_:
+            csv_reader = csv.DictReader(file_)
+            filtered_data = [row for row in csv_reader if row['Actors']==user_input or row['Genre']==user_input]
+            return filtered_data
+
+print(search_movies_data())
