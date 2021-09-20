@@ -41,27 +41,26 @@ def get_synopsis(movies_id):
     except TypeError :
         print("none type returned")
 
-movie_id_list = top_movie("https://www.imdb.com/chart/top/",1)
+movie_id_list = top_movie("https://www.imdb.com/chart/top/",5)
 synopsis_list = get_synopsis(movie_id_list)
 
 #this function return a list od bag_of_words
 def bag_of_words(string_):
     
     all_stopwords = stopwords.words('english')
-    
-    for content in synopsis_list:       
-        text_tokens= [word for word in word_tokenize(content) if word.isalnum()] 
-        bag_of_words = [word for word in text_tokens if not word in all_stopwords]
-        filtered_string = [' '.join(bag_of_words)]
+       
+    text_tokens= [word for word in word_tokenize(string_) if word.isalnum()] 
+    bag_of_words = [word for word in text_tokens if not word in all_stopwords]
+    filtered_string = [' '.join(bag_of_words)]
         
     return filtered_string
 
 
 movie_data_dict = {}
 num = 0
-for string in synopsis_list:
+for string_ in synopsis_list:
     my_punctuation = punctuation.replace("'", "")
-    new_str = string.translate(str.maketrans("", "", my_punctuation))
+    new_str = string_.translate(str.maketrans("", "", my_punctuation))
     movie_data_dict[movie_id_list[num]] =  bag_of_words(new_str)
     num+=1
 
@@ -84,3 +83,29 @@ for movie_id  in movie_id_list:
     temp_dict['Actors'] = response['Actors']
     movie_data_dict[f'{movie_id}'] =temp_dict
 print(movie_data_dict)
+
+
+fields = ['title','Synopsis','Genre','Actors']
+file_name = 'movies_dict_csv.csv'
+def dict_to_csv_writer():
+    if os.path.exists(file_name):
+        file_ = open(file_name,'r')
+        file_reader = csv.DictReader(file_)
+        for row in file_reader:
+            for item in movie_id_list:
+                if row['title'] == item:
+                    movie_data_dict.pop(item)
+        file_.close()
+        if len(movie_data_dict) > 0:
+            with open(file_name,'a') as file:
+                csv_writer_ = csv.DictWriter(file,fields)
+                for key in movie_data_dict:
+                    csv_writer_.writerow({field: movie_data_dict[key].get(field) or key for field in fields})
+    else:
+        with open(file_name,'w') as csv_file:
+            csv_writer_ = csv.DictWriter(csv_file,fields)
+            csv_writer_.writeheader()
+            for key in movie_data_dict:
+                csv_writer_.writerow({field: movie_data_dict[key].get(field) or key for field in fields})
+
+dict_to_csv_writer()
