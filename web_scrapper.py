@@ -6,8 +6,12 @@ import re
 from string import punctuation
 import csv
 import os
+import logging
 
-
+#creating logger file 
+logging.basicConfig(filename="web_scrapper_logger.log",format='%(asctime)s %(message)s',filemode='w')
+logger_obj=logging.getLogger()
+logger_obj.setLevel(logging.DEBUG)
 
 #top_movie function  return the list of top n movies from IMDB website
 def top_movie(url,top_num):
@@ -20,11 +24,13 @@ def top_movie(url,top_num):
             movie_id_list.append((str(class_content).split("/"))[2])
         return movie_id_list
     except TypeError:
-        print("top_num should be an integer")
+        logging.error("top num should be  int ")
     except requests.exceptions.InvalidURL:
-        print("invalid url")
+        logging.error("invalid url")
+    except requests.exceptions.ConnectionError:
+        logging.error("Internet connection problem,please check your connection  ")    
     except requests.exceptions.MissingSchema :
-        print("provide  url ")
+        logging.error("provide  url ")
 
 
 #get_synopsis return the list of synopsis of movie_id from movies_id_list
@@ -34,15 +40,19 @@ def get_synopsis(movies_id):
         synopsis_list = []
         for movie_id in movies_id:
             request_ = requests.get(base_url+movie_id)
-            soup = bs4.BeautifulSoup(request_.text,'lxml')
-            synopsis = soup.select('.ipc-html-content.ipc-html-content--base')[1]
-            synopsis_list.append(synopsis.getText())
+            if request_.status_code ==200:
+                soup = bs4.BeautifulSoup(request_.text,'lxml')
+                synopsis_list.append(soup.select('.ipc-html-content.ipc-html-content--base')[1].getText())
+            else:
+                logging.error("Invalid url")
         return synopsis_list
     except TypeError :
-        print("none type returned")
+        logging.error("none type returned")
 
 movie_id_list = top_movie("https://www.imdb.com/chart/top/",5)
 synopsis_list = get_synopsis(movie_id_list)
+logging.info(movie_id_list)
+logging.info(synopsis_list)
 
 #this function return a list od bag_of_words
 def bag_of_words(string_):
@@ -54,7 +64,7 @@ def bag_of_words(string_):
             
         return filtered_string
     except TypeError:
-        print("passed empty  argument")
+        logging.error("passed empty  argument")
 
 #diction creation  with title as key and synopsis as value
 movie_data_dict = {}
@@ -63,7 +73,7 @@ for string_ in synopsis_list:
     new_str = string_.translate(str.maketrans("", "", punctuation))
     movie_data_dict[movie_id_list[num]] =  bag_of_words(new_str)
     num+=1
-
+logging.info(movie_data_dict)
 
 
 Omdb_key = "64a6542a" # apikey for OBDb website
@@ -77,7 +87,7 @@ def fetchting_movie_data(movie_id):
             synopsis_data = fetched_data.json()
             return synopsis_data
     except TypeError:
-        print("movie_id is not int ")
+        logging.error("movie_id is not int ")
 for movie_id  in movie_id_list:
     response = fetchting_movie_data(str(movie_id))
     try :
@@ -87,9 +97,9 @@ for movie_id  in movie_id_list:
         temp_dict['Actors'] = response['Actors']
         movie_data_dict[f'{movie_id}'] =temp_dict
     except KeyError:
-        print("key not found")
+        logging.error("key not found")
         
-print(movie_data_dict)
+
 
 
 fields = ['title','Synopsis','Genre','Actors']
@@ -103,8 +113,10 @@ def dict_to_csv_writer():
                 try:
                     if row['title'] == item:
                         movie_data_dict.pop(item)
+                    else:
+                        return KeyError
                 except KeyError:
-                    print("key not found")
+                    logging.error("key not found")
         file_.close()
         if len(movie_data_dict) > 0:
             with open(file_name,'a') as file:
@@ -118,7 +130,7 @@ def dict_to_csv_writer():
             for key in movie_data_dict:
                 csv_writer_.writerow({field: movie_data_dict[key].get(field) or key for field in fields})
 
-dict_to_csv_writer()
+logging.info(dict_to_csv_writer())
 
 
 def search_movies_data():
@@ -130,6 +142,8 @@ def search_movies_data():
             filtered_data = [row for row in csv_reader if row['Actors']==user_input or row['Genre']==user_input]
             return filtered_data
 
-print(search_movies_data())
+fetched_data = search_movies_data()
+print(fetched_data)
+logging.info(fetched_data)
 
     
