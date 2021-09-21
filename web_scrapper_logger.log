@@ -1,0 +1,58 @@
+2021-09-21 12:06:52,228 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:06:52,636 https://www.imdb.com:443 "GET /chart/top/ HTTP/1.1" 200 None
+2021-09-21 12:06:54,385 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:06:54,643 https://www.imdb.com:443 "GET /title/tt0111161 HTTP/1.1" 301 0
+2021-09-21 12:06:55,260 https://www.imdb.com:443 "GET /title/tt0111161/ HTTP/1.1" 200 None
+2021-09-21 12:06:55,986 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:06:56,259 https://www.imdb.com:443 "GET /title/tt0068646 HTTP/1.1" 301 0
+2021-09-21 12:06:56,833 https://www.imdb.com:443 "GET /title/tt0068646/ HTTP/1.1" 200 None
+2021-09-21 12:06:57,564 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:06:57,818 https://www.imdb.com:443 "GET /title/tt0071562 HTTP/1.1" 301 0
+2021-09-21 12:06:58,460 https://www.imdb.com:443 "GET /title/tt0071562/ HTTP/1.1" 200 None
+2021-09-21 12:06:59,188 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:06:59,446 https://www.imdb.com:443 "GET /title/tt0468569 HTTP/1.1" 301 0
+2021-09-21 12:07:00,680 https://www.imdb.com:443 "GET /title/tt0468569/ HTTP/1.1" 200 None
+2021-09-21 12:07:01,408 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:07:01,669 https://www.imdb.com:443 "GET /title/tt0050083 HTTP/1.1" 301 0
+2021-09-21 12:07:02,222 https://www.imdb.com:443 "GET /title/tt0050083/ HTTP/1.1" 200 None
+2021-09-21 12:07:02,937 ['tt0111161', 'tt0068646', 'tt0071562', 'tt0468569', 'tt0050083']
+2021-09-21 12:07:02,937 ["Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit. The film portrays the man's unique way of dealing with his new, torturous life; along the way he befriends a number of fellow prisoners, most notably a wise long-term inmate named Red. —J-S-Golden", 'During an early shot of the scene where Vito Corleone returns home and his people carry him up the stairs, Marlon Brando put weights under his body on the bed as a prank, to make it harder to lift him.', 'Robert De Niro spent four months learning to speak the Sicilian language in order to play Vito Corleone. Nearly all of the dialogue that his character speaks in the film was in Sicilian.', 'In Sir Michael Caine\'s opinion, Heath Ledger beat the odds and topped Jack Nicholson\'s Joker from Batman (1989): "Jack was like a clown figure, benign but wicked, maybe a killer old uncle. He could be funny and make you laugh. Heath\'s gone in a completely different direction to Jack, he\'s like a really scary psychopath. He\'s a lovely guy and his Joker is going to be a hell of a revelation in this picture." Caine bases this belief on a scene where The Joker pays a visit to Bruce Wayne\'s penthouse. He\'d never met Ledger before, so when Ledger arrived and performed, he gave Caine such a fright, he forgot his lines.', 'At the beginning of the film, the cameras are all positioned above eye level and mounted with wide-angle lenses to give the appearance of greater distance between the subjects. As the film progresses the cameras slip down to eye level. By the end of the film, nearly all of it is shot below eye level, in close-up and with telephoto lenses to increase the encroaching sense of claustrophobia.']
+2021-09-21 12:07:02,947 {'tt0111161': ['Chronicles experiences formerly successful banker prisoner gloomy jailhouse Shawshank found guilty crime commit The film portrays mans unique way dealing new torturous life along way befriends number fellow prisoners notably wise longterm inmate named Red'], 'tt0068646': ['During early shot scene Vito Corleone returns home people carry stairs Marlon Brando put weights body bed prank make harder lift'], 'tt0071562': ['Robert De Niro spent four months learning speak Sicilian language order play Vito Corleone Nearly dialogue character speaks film Sicilian'], 'tt0468569': ['In Sir Michael Caines opinion Heath Ledger beat odds topped Jack Nicholsons Joker Batman 1989 Jack like clown figure benign wicked maybe killer old uncle He could funny make laugh Heaths gone completely different direction Jack hes like really scary psychopath Hes lovely guy Joker going hell revelation picture Caine bases belief scene The Joker pays visit Bruce Waynes penthouse Hed never met Ledger Ledger arrived performed gave Caine fright forgot lines'], 'tt0050083': ['At beginning film cameras positioned eye level mounted wideangle lenses give appearance greater distance subjects As film progresses cameras slip eye level By end film nearly shot eye level closeup telephoto lenses increase encroaching sense claustrophobia']}
+2021-09-21 12:07:02,949 Starting new HTTP connection (1): www.omdbapi.com:80
+2021-09-21 12:07:03,517 http://www.omdbapi.com:80 "GET /?i=tt0111161&apikey=64a6542a HTTP/1.1" 200 None
+2021-09-21 12:07:03,519 Starting new HTTP connection (1): www.omdbapi.com:80
+2021-09-21 12:07:03,611 http://www.omdbapi.com:80 "GET /?i=tt0068646&apikey=64a6542a HTTP/1.1" 200 None
+2021-09-21 12:07:03,613 Starting new HTTP connection (1): www.omdbapi.com:80
+2021-09-21 12:07:03,705 http://www.omdbapi.com:80 "GET /?i=tt0071562&apikey=64a6542a HTTP/1.1" 200 None
+2021-09-21 12:07:03,707 Starting new HTTP connection (1): www.omdbapi.com:80
+2021-09-21 12:07:03,837 http://www.omdbapi.com:80 "GET /?i=tt0468569&apikey=64a6542a HTTP/1.1" 200 None
+2021-09-21 12:07:03,840 Starting new HTTP connection (1): www.omdbapi.com:80
+2021-09-21 12:07:03,919 http://www.omdbapi.com:80 "GET /?i=tt0050083&apikey=64a6542a HTTP/1.1" 200 None
+2021-09-21 12:07:03,920 <class 'KeyError'>
+2021-09-21 12:07:46,576 [{'title': 'tt0111161', 'Synopsis': "['Chronicles experiences formerly successful banker prisoner gloomy jailhouse Shawshank found guilty crime commit The film portrays man unique way dealing new torturous life along way befriends number fellow prisoners notably wise longterm inmate named Red']", 'Genre': 'Drama', 'Actors': 'Tim Robbins, Morgan Freeman, Bob Gunton'}]
+2021-09-21 12:07:46,586 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:07:47,026 https://www.imdb.com:443 "GET /chart/top/ HTTP/1.1" 200 None
+2021-09-21 12:07:48,387 top num should be  int 
+2021-09-21 12:07:48,387 invalid url
+2021-09-21 12:07:48,387 
+top_moive function tested successful
+2021-09-21 12:07:48,390 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:07:48,660 https://www.imdb.com:443 "GET /title/m HTTP/1.1" 404 None
+2021-09-21 12:07:48,661 Invalid url
+2021-09-21 12:07:48,663 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:07:49,586 https://www.imdb.com:443 "GET /title/k HTTP/1.1" 404 None
+2021-09-21 12:07:49,588 Invalid url
+2021-09-21 12:07:49,590 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:07:49,866 https://www.imdb.com:443 "GET /title/n HTTP/1.1" 404 None
+2021-09-21 12:07:49,867 Invalid url
+2021-09-21 12:07:49,869 Starting new HTTPS connection (1): www.imdb.com:443
+2021-09-21 12:07:50,141 https://www.imdb.com:443 "GET /title/j HTTP/1.1" 404 None
+2021-09-21 12:07:50,143 Invalid url
+2021-09-21 12:07:50,143 
+get_synopsis function tested succesful
+2021-09-21 12:07:50,144 
+bag_of_words() function tested successful
+2021-09-21 12:07:50,145 movie_id is not int 
+2021-09-21 12:07:50,145 
+fetching_movie_data() function tested successfully
+2021-09-21 12:08:17,308  search_movies_data() function tested successfully
