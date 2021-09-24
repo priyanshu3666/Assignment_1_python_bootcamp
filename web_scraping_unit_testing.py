@@ -1,6 +1,8 @@
 import unittest
 import logging
 import web_scrapper
+from unittest import mock
+from unittest.mock import patch
 
 
 
@@ -23,7 +25,8 @@ class Test_Web_Scraping(unittest.TestCase):
         logging.info("\nfetching_movie_data() function tested successfully")
         
     def test_5_search_movies_data(self):
-        self.assertEqual(web_scrapper.search_movies_data(),[{'title': 'tt0068646', 'Synopsis': "['During early shot scene Vito Corleone returns home people carry stairs Marlon Brando put weights body bed prank make harder lift']", 'Genre': 'Crime, Drama', 'Actors': 'Marlon Brando, Al Pacino, James Caan'}, {'title': 'tt0071562', 'Synopsis': "['Robert De Niro spent four months learning speak Sicilian language order play Vito Corleone Nearly dialogue character speaks film Sicilian']", 'Genre': 'Crime, Drama', 'Actors': 'Al Pacino, Robert De Niro, Robert Duvall'}, {'title': 'tt0050083', 'Synopsis': "['At beginning film cameras positioned eye level mounted wideangle lenses give appearance greater distance subjects As film progresses cameras slip eye level By end film nearly shot eye level closeup telephoto lenses increase encroaching sense claustrophobia']", 'Genre': 'Crime, Drama', 'Actors': 'Henry Fonda, Lee J. Cobb, Martin Balsam'}])
-        logging.info(" search_movies_data() function tested successfully")
+        with mock.patch('builtins.input', return_value = "Crime"):
+            assert web_scrapper.search_movies_data() == ['The Godfather', 'The Godfather: Part II', 'The Dark Knight', '12 Angry Men']
+            logging.info("\n search_movies_data() function successfully tested")
 if __name__ == '__main__':
     unittest.main()
